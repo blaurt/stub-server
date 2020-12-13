@@ -9,6 +9,7 @@ import {
 import { Container } from "inversify";
 
 import "./controllers";
+import * as bodyParser from "body-parser";
 
 // import * as bodyParser from "body-parser";
 // import * as Debug from "debug";
@@ -125,6 +126,10 @@ import "./controllers";
 
 const container = new Container();
 const server = new InversifyExpressServer(container);
+server.setConfig(app => {
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+});
 const app = server.build();
 
 const PORT = 3000;
